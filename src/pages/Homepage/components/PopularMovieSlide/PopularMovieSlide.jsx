@@ -1,25 +1,8 @@
-import "react-multi-carousel/lib/styles.css";
-import "./PopularMovieSlide.style.css";
 import React from "react";
-import Carousel from "react-multi-carousel";
-import MovieCard from "../MovieCard/MovieCard";
-import { usePopularMoviesQuery } from "../../../../hooks/usePopularMovies";
+import MovieSlider from "../../../../common/MovieSlider/MovieSlider";
 import { Alert } from "react-bootstrap";
-
-const responsive = {
-  desktop: {
-    breakpoint: { max: 3000, min: 1024 },
-    items: 6,
-  },
-  tablet: {
-    breakpoint: { max: 1024, min: 464 },
-    items: 2,
-  },
-  mobile: {
-    breakpoint: { max: 464, min: 0 },
-    items: 1,
-  },
-};
+import { usePopularMoviesQuery } from "../../../../hooks/usePopularMovies";
+import { responsive } from "../../../../constants/responsive";
 
 const PopularMovieSlide = () => {
   const { data, isLoading, isError, error } = usePopularMoviesQuery();
@@ -34,17 +17,11 @@ const PopularMovieSlide = () => {
 
   return (
     <div>
-      <h3>Popular Movies</h3>
-      <Carousel
-        infinite={true} // 무한
-        centerMode={true}
-        containerClass="carousel-container"
+      <MovieSlider
+        title="Popular Movies"
+        movies={data.results}
         responsive={responsive}
-      >
-        {data.results.map((movie, index) => (
-          <MovieCard movie={movie} key={index} />
-        ))}
-      </Carousel>
+      />
     </div>
   );
 };
